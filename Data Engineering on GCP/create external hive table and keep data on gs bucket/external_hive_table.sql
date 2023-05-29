@@ -17,9 +17,5 @@ insert into hive_db.customers_external select * from hive_db.customers;
 
 
 
-create external ive table and keep data on gs bucket
-
-
-
 
 
