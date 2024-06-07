@@ -1,0 +1,10 @@
+{
+    "SNOWFLAKE":{
+        "USER":"avinashetl",
+        "PASSWORD":"pas@Pune2022",
+        "ACCOUNT":"ee86352.ap-south-1.aws",
+        "WAREHOUSE":"COMPUTE_WH",
+        "DATABASE":"dev_db",
+        "SCHEMA":"w3c"
+    }
+}

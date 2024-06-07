@@ -1,0 +1,59 @@
+import logging
+import logging.handlers as handlers
+import time
+from threading import Thread
+#import utils.order_utils
+#import utils.customer_utils
+
+logger1 = logging.getLogger('retail-customer-generator')
+logger2 = logging.getLogger('retail-order-generator')
+
+logger1.setLevel(logging.INFO)
+logger2.setLevel(logging.INFO)
+
+## Here we define our formatter
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+  
+def get_logger(record_type):
+	print("record_type : {}".format(record_type))
+	logHandler = handlers.TimedRotatingFileHandler(r"logs/{}.log".format(record_type), when='H', interval=1, backupCount=0)
+	logHandler.setLevel(logging.INFO)
+	logHandler.setFormatter(formatter)
+
+	errorLogHandler = handlers.RotatingFileHandler(r"logs/{}_error.log".format(record_type), maxBytes=5000, backupCount=0)
+	errorLogHandler.setLevel(logging.ERROR)
+	errorLogHandler.setFormatter(formatter)
+
+	if record_type=='customer':
+		logger=logger1
+	else:
+		logger=logger2
+          
+	logger.addHandler(logHandler)
+	logger.addHandler(errorLogHandler)
+ 
+	return logger
+
+def customer_generation():
+    logger=get_logger('customer')
+    while 1:
+	    time.sleep(7)
+    	logger.info("Customer generation_started...")
+ 
+def order_generation():
+    logger=get_logger('order')
+    time.sleep(20)		
+	while(1):
+		time.sleep(2)		
+		logger.info("Order generation_started...")
+
+def main():
+	# create a thread
+	thread_c = Thread(target=customer_generation)
+	thread_o = Thread(target=order_generation)
+	# run the thread
+	thread_c.start()
+	print("thread_c started...")
+	thread_o.start()
+	print("thread_o started...")
+main()
